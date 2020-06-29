@@ -26,11 +26,12 @@
         <h4>Выберите файл для загрузки:</h4>
   
        <asp:FileUpload id="FileUpload1"                 
-           runat="server" >
+           runat="server" 
+           AllowMultiple="true" >
        </asp:FileUpload>
        <br /><br />  
        <asp:Button id="UploadButton" 
-           Text="Загрузить файл"
+           Text="Загрузить файлы"
            OnClick="Upload_Click"
            runat="server">
        </asp:Button>  

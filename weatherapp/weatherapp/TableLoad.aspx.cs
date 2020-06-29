@@ -28,78 +28,79 @@ namespace weatherapp
         }
         protected void Upload_Click(object sender, EventArgs e)
         {
-            if (FileUpload1.HasFile)
+            if ((FileUpload1.PostedFile != null) && (FileUpload1.PostedFile.ContentLength > 0))
             {
-                try
+                var count = 0;
+                foreach (HttpPostedFile uploadedFile in FileUpload1.PostedFiles)
                 {
-                    string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                    FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Uploads/" + fileName));
-                    XSSFWorkbook xssfwb;
-                    using (FileStream file = new FileStream(Server.MapPath("~/Uploads/" + fileName), FileMode.Open, FileAccess.Read))
+                    try
                     {
-                        xssfwb = new XSSFWorkbook(file);
-                    }
-                    WeatherContext db = new WeatherContext();
-                    
-                    for (int i = 0; i < 12; i++)
-                    {
-                        ISheet sheet = xssfwb.GetSheetAt(i);
-                        for (int row = 4; row <= sheet.LastRowNum; row++)
+                        XSSFWorkbook xssfwb;
+                        Stream file = uploadedFile.InputStream;
                         {
-                            var curRow = sheet.GetRow(row);
-                            string date = curRow.GetCell(0).StringCellValue;
-                            date += " " + curRow.GetCell(1).StringCellValue;
-
-                            Weather wew1 = new Weather
-                            {
-                                ID = row,
-                                Date = Convert.ToDateTime(date)
-                            };
-
-                            wew1.T = Convert.ToDouble(curRow.GetCell(2).NumericCellValue, CultureInfo.InvariantCulture);
-                            wew1.Humidity = Convert.ToDouble(curRow.GetCell(3).NumericCellValue, CultureInfo.InvariantCulture);
-                            wew1.Td = Convert.ToDouble(curRow.GetCell(4).NumericCellValue, CultureInfo.InvariantCulture);
-                            wew1.AtmoPress = curRow.GetCell(5).NumericCellValue;
-                            wew1.Wind = curRow.GetCell(6).ToString();
-                            if (curRow.GetCell(7).CellType == CellType.String) { }
-                            if (curRow.GetCell(7).CellType == CellType.Numeric)
-                            {
-                                wew1.WindSpeed = curRow.GetCell(7).NumericCellValue;
-                            }
-                            if (curRow.GetCell(8).CellType == CellType.String) { }
-                            if (curRow.GetCell(8).CellType == CellType.Numeric)
-                            {
-                                wew1.Clouds = curRow.GetCell(8).NumericCellValue;
-                            }
-                            if (curRow.GetCell(9).CellType == CellType.String) { }
-                            if (curRow.GetCell(9).CellType == CellType.Numeric)
-                            {
-                                wew1.h = curRow.GetCell(9).NumericCellValue;
-                            }
-                            if (curRow.GetCell(10).CellType == CellType.String) { }
-                            if (curRow.GetCell(10).CellType == CellType.Numeric)
-                            {
-                                wew1.VV = curRow.GetCell(10).NumericCellValue;
-                            }
-                            //MessageBox.Show(curRow.LastCellNum.ToString());
-                            if (curRow.LastCellNum == 12)
-                            {
-                                wew1.Other = curRow.GetCell(11).ToString();
-                            }
+                            xssfwb = new XSSFWorkbook(file);
                         }
+                        WeatherContext db = new WeatherContext();
+
+                        for (int i = 0; i < 12; i++)
+                        {
+                            ISheet sheet = xssfwb.GetSheetAt(i);
+                            for (int row = 4; row <= sheet.LastRowNum; row++)
+                            {
+                                var curRow = sheet.GetRow(row);
+                                string date = curRow.GetCell(0).StringCellValue;
+                                date += " " + curRow.GetCell(1).StringCellValue;
+
+                                Weather wew1 = new Weather
+                                {
+                                    ID = row,
+                                    Date = Convert.ToDateTime(date)
+                                };
+
+                                wew1.T = Convert.ToDouble(curRow.GetCell(2).NumericCellValue, CultureInfo.InvariantCulture);
+                                wew1.Humidity = Convert.ToDouble(curRow.GetCell(3).NumericCellValue, CultureInfo.InvariantCulture);
+                                wew1.Td = Convert.ToDouble(curRow.GetCell(4).NumericCellValue, CultureInfo.InvariantCulture);
+                                wew1.AtmoPress = curRow.GetCell(5).NumericCellValue;
+                                wew1.Wind = curRow.GetCell(6).ToString();
+                                if (curRow.GetCell(7).CellType == CellType.String) { }
+                                if (curRow.GetCell(7).CellType == CellType.Numeric)
+                                {
+                                    wew1.WindSpeed = curRow.GetCell(7).NumericCellValue;
+                                }
+                                if (curRow.GetCell(8).CellType == CellType.String) { }
+                                if (curRow.GetCell(8).CellType == CellType.Numeric)
+                                {
+                                    wew1.Clouds = curRow.GetCell(8).NumericCellValue;
+                                }
+                                if (curRow.GetCell(9).CellType == CellType.String) { }
+                                if (curRow.GetCell(9).CellType == CellType.Numeric)
+                                {
+                                    wew1.h = curRow.GetCell(9).NumericCellValue;
+                                }
+                                if (curRow.GetCell(10).CellType == CellType.String) { }
+                                if (curRow.GetCell(10).CellType == CellType.Numeric)
+                                {
+                                    wew1.VV = curRow.GetCell(10).NumericCellValue;
+                                }
+                                //MessageBox.Show(curRow.LastCellNum.ToString());
+                                if (curRow.LastCellNum == 12)
+                                {
+                                    wew1.Other = curRow.GetCell(11).ToString();
+                                }
+                                db.Weathers.Add(wew1);
+                            }
+                            db.SaveChanges();
+                        }
+                        myLabel.Text += "Таблицы из файла № " + count + " успешно загружены. ";
                     }
-                    db.SaveChanges();
-                    myLabel.Text += "Таблица успешно загружена. ";
+                    catch
+                    {
+                        MessageBox.Show("Таблица неверного формата");
+                    }
+                    count++;
+
+
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Таблица неверного формата");
-                }
-            
-            }
-            else
-            {
-                MessageBox.Show("Не удалось загрузить файл.");
             }
         }
     }
