@@ -37,7 +37,8 @@
            Text="Загрузить файл"
            OnClick="Upload_Click"
            runat="server">
-       </asp:Button>   
+       </asp:Button>  
+        <asp:Label ID="myLabel" runat="server"></asp:Label>
     </div>
     </form>
 </body>

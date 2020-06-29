@@ -9,9 +9,16 @@ namespace weatherapp
 
     public class Weather
     {
-        public int Id { get; set; }
-        public int Year { get; set; }
-        public string Month { get; set; }
+        public DateTime Date { get; set; }
+        public float T { get; set; }
+        public float Humidity { get; set; }
+        public float Td { get; set; }
+        public int AtmoPress { get; set; }
+        public string Wind { get; set; }
+        public int WindSpeed { get; set; }
+        public int Clouds { get; set; }
+        public int h { get; set; }
+        public int VV { get; set; }
         public string Other { get; set; }
     }
     class WeatherContext : DbContext
