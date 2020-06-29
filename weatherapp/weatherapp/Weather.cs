@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,16 +10,17 @@ namespace weatherapp
 
     public class Weather
     {
+        public int ID { get; set; }
         public DateTime Date { get; set; }
-        public float T { get; set; }
-        public float Humidity { get; set; }
-        public float Td { get; set; }
-        public int AtmoPress { get; set; }
+        public double T { get; set; }
+        public double Humidity { get; set; }
+        public double Td { get; set; }
+        public double AtmoPress { get; set; }
         public string Wind { get; set; }
-        public int WindSpeed { get; set; }
-        public int Clouds { get; set; }
-        public int h { get; set; }
-        public int VV { get; set; }
+        public double WindSpeed { get; set; }
+        public double Clouds { get; set; }
+        public double h { get; set; }
+        public double VV { get; set; }
         public string Other { get; set; }
     }
     class WeatherContext : DbContext
@@ -29,5 +31,6 @@ namespace weatherapp
 
         public DbSet<Weather> Weathers { get; set; }
     }
+    
 
 }

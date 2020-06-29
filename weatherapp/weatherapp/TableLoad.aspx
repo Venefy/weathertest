@@ -23,22 +23,24 @@
             </asp:menuitem>
         </items>
         </asp:Menu>
-        <asp:Table ID="Table1" runat="server">
-        </asp:Table>
         <h4>Выберите файл для загрузки:</h4>
   
        <asp:FileUpload id="FileUpload1"                 
            runat="server" >
        </asp:FileUpload>
-            
-       <br /><br />
-       
+       <br /><br />  
        <asp:Button id="UploadButton" 
            Text="Загрузить файл"
            OnClick="Upload_Click"
            runat="server">
        </asp:Button>  
         <asp:Label ID="myLabel" runat="server"></asp:Label>
+        <br /><br />
+        <asp:Button id="delete" 
+           Text="Очистить все данные"
+           OnClick="delete_Click"
+           runat="server">
+       </asp:Button>  
     </div>
     </form>
 </body>

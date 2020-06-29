@@ -8,17 +8,23 @@ using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using System.IO;
 using System.Windows;
-using ExcelDataReader;
-
 using System.Data;
+using System.Data.SqlClient;
+using System.Data.Common;
+using System.Globalization;
+
 
 namespace weatherapp
 {
     public partial class TableLoad : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void delete_Click(object sender, EventArgs e)
         {
-
+            using (WeatherContext db = new WeatherContext())
+            {
+                db.Database.Delete();
+                MessageBox.Show("Все данные были успешно удалены.");
+            }
         }
         protected void Upload_Click(object sender, EventArgs e)
         {
@@ -29,31 +35,65 @@ namespace weatherapp
                     string fileName = Path.GetFileName(FileUpload1.PostedFile.FileName);
                     FileUpload1.PostedFile.SaveAs(Server.MapPath("~/Uploads/" + fileName));
                     XSSFWorkbook xssfwb;
-                    //Открываем файл
                     using (FileStream file = new FileStream(Server.MapPath("~/Uploads/" + fileName), FileMode.Open, FileAccess.Read))
                     {
                         xssfwb = new XSSFWorkbook(file);
                     }
-                    ISheet sheet = xssfwb.GetSheetAt(1);
-                    for (int row = 0; row <= sheet.LastRowNum; row++)
+                    WeatherContext db = new WeatherContext();
+                    
+                    for (int i = 0; i < 12; i++)
                     {
-                        var currentRow = sheet.GetRow(row);
-
-                        for (int column = 0; column < currentRow.Cells.Count; column++)
+                        ISheet sheet = xssfwb.GetSheetAt(i);
+                        for (int row = 4; row <= sheet.LastRowNum; row++)
                         {
-                            var stringCellValue = currentRow.GetCell(column);
-                            
-                            myLabel.Text += string.Format("Ячейка {0}-{1} значение:{2}", row, column, stringCellValue);
-                            
+                            var curRow = sheet.GetRow(row);
+                            string date = curRow.GetCell(0).StringCellValue;
+                            date += " " + curRow.GetCell(1).StringCellValue;
+
+                            Weather wew1 = new Weather
+                            {
+                                ID = row,
+                                Date = Convert.ToDateTime(date)
+                            };
+
+                            wew1.T = Convert.ToDouble(curRow.GetCell(2).NumericCellValue, CultureInfo.InvariantCulture);
+                            wew1.Humidity = Convert.ToDouble(curRow.GetCell(3).NumericCellValue, CultureInfo.InvariantCulture);
+                            wew1.Td = Convert.ToDouble(curRow.GetCell(4).NumericCellValue, CultureInfo.InvariantCulture);
+                            wew1.AtmoPress = curRow.GetCell(5).NumericCellValue;
+                            wew1.Wind = curRow.GetCell(6).ToString();
+                            if (curRow.GetCell(7).CellType == CellType.String) { }
+                            if (curRow.GetCell(7).CellType == CellType.Numeric)
+                            {
+                                wew1.WindSpeed = curRow.GetCell(7).NumericCellValue;
+                            }
+                            if (curRow.GetCell(8).CellType == CellType.String) { }
+                            if (curRow.GetCell(8).CellType == CellType.Numeric)
+                            {
+                                wew1.Clouds = curRow.GetCell(8).NumericCellValue;
+                            }
+                            if (curRow.GetCell(9).CellType == CellType.String) { }
+                            if (curRow.GetCell(9).CellType == CellType.Numeric)
+                            {
+                                wew1.h = curRow.GetCell(9).NumericCellValue;
+                            }
+                            if (curRow.GetCell(10).CellType == CellType.String) { }
+                            if (curRow.GetCell(10).CellType == CellType.Numeric)
+                            {
+                                wew1.VV = curRow.GetCell(10).NumericCellValue;
+                            }
+                            //MessageBox.Show(curRow.LastCellNum.ToString());
+                            if (curRow.LastCellNum == 12)
+                            {
+                                wew1.Other = curRow.GetCell(11).ToString();
+                            }
                         }
-
-
                     }
+                    db.SaveChanges();
+                    myLabel.Text += "Таблица успешно загружена. ";
                 }
-            
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show("Таблица неверного формата");
                 }
             
             }
@@ -61,61 +101,6 @@ namespace weatherapp
             {
                 MessageBox.Show("Не удалось загрузить файл.");
             }
-
         }
-        //protected void Button2_Click(object sender, EventArgs e)
-        //{
-
-        //    using (WeatherContext db = new WeatherContext())
-        //    {
-        //        db.Database.Delete();
-        //        // создаем два объекта Weather
-        //        Weather user1 = new Weather { Month = "Tom", Year = 33 };
-        //        Weather user2 = new Weather { Month = "Sam", Year = 26 };
-
-        //        // добавляем их в бд
-        //        db.Weathers.Add(user1);
-        //        db.Weathers.Add(user2);
-        //        db.SaveChanges();
-
-        //        string str = "";
-
-        //        var users = db.Weathers;
-
-        //        foreach (Weather u in users)
-        //        {
-        //            str += u.Id.ToString();
-        //            str += u.Year.ToString();
-        //            str += u.Month.ToString();
-
-        //        }
-
-        //        //    TableCell c = new TableCell();
-        //        //    c.Controls.Add(new LiteralControl(db.Weathers.ToString()));
-
-        //        //    // Console.WriteLine("{0}.{1} - {2}", u.Id, u.Name, u.Age);
-        //        //}
-        //    }
-
-        //}
-
-        //protected void Button1_Click(object sender, EventArgs e)
-        //{
-        //    int rows = Convert.ToInt16(TextBox1.Text);
-        //    int cols = Convert.ToInt16(TextBox2.Text);
-        //    for (int j = 0; j < rows; j++)
-        //    {
-        //        TableRow r = new TableRow();
-        //        for (int i = 0; i < cols; i++)
-        //        {
-        //            TableCell c = new TableCell();
-        //            c.Controls.Add(new LiteralControl("row" +
-        //            j.ToString() + ", cell " + i.ToString()));
-        //            r.Cells.Add(c);
-        //        }
-        //        Table1.Rows.Add(r);
-        //    }
-
-        //}
     }
 }

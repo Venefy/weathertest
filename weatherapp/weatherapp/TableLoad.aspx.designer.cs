@@ -31,15 +31,6 @@ namespace weatherapp {
         protected global::System.Web.UI.WebControls.Menu Menu1;
         
         /// <summary>
-        /// Table1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
-        
-        /// <summary>
         /// FileUpload1 control.
         /// </summary>
         /// <remarks>
@@ -65,5 +56,14 @@ namespace weatherapp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label myLabel;
+        
+        /// <summary>
+        /// delete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button delete;
     }
 }
