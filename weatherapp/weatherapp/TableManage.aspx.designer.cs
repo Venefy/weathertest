@@ -10,7 +10,7 @@
 namespace weatherapp {
     
     
-    public partial class Default {
+    public partial class TableManage {
         
         /// <summary>
         /// form1 control.

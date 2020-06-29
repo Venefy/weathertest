@@ -94,6 +94,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="TableLoad.aspx" />
+    <Content Include="TableManage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +107,20 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableLoad.aspx.cs">
+      <DependentUpon>TableLoad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TableLoad.aspx.designer.cs">
+      <DependentUpon>TableLoad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TableManage.aspx.cs">
+      <DependentUpon>TableManage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TableManage.aspx.designer.cs">
+      <DependentUpon>TableManage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Weather.cs" />
   </ItemGroup>
   <ItemGroup>
