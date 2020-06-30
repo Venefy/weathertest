@@ -5,11 +5,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Главная страница</title>
+    <link  type="text/css" rel="stylesheet" href="bootstrap.css" />
+    <link  type="text/css" rel="stylesheet" href="Style1.css" />
 </head>
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:Menu ID="Menu1" runat="server"  StaticDisplayLevels="2">
+        <asp:Menu ID="Menu1" runat="server"  StaticDisplayLevels="2" Font-Size="Larger" >
+            <staticmenuitemstyle
+          forecolor="Black"/>
+        <statichoverstyle Font-Bold="true"/>
           <items>
           <asp:menuitem navigateurl="Default.aspx" 
             text="Главная"
@@ -21,8 +26,10 @@
               text="Загрузка архивов "
               tooltip="Загрузка архивов погодных условий в городе Москве"/>
             </asp:menuitem>
+
         </items>
         </asp:Menu>
+        <br /><br /> 
         <h4>Главная страница</h4>
         Данное приложение позволит Вам просмотреть архивы погодных условий в городе Москве. И при желании загрузить свои данные.
 

@@ -5,11 +5,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Просмотр архивов</title>
+     <link  type="text/css" rel="stylesheet" href="bootstrap.css" />
+    <link  type="text/css" rel="stylesheet" href="Style1.css" />
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
-          <asp:Menu ID="Menu1" runat="server"  StaticDisplayLevels="2">
+          <asp:Menu ID="Menu1" runat="server"  StaticDisplayLevels="2" Font-Size="Larger">
+                <staticmenuitemstyle
+          forecolor="Black"/>
+        <statichoverstyle Font-Bold="true"/>
           <items>
           <asp:menuitem navigateurl="Default.aspx" 
             text="Главная"
@@ -23,8 +28,8 @@
             </asp:menuitem>
         </items>
         </asp:Menu>
-
-            <h4>Просмотр туть</h4>
+            <br /><br /> 
+            <h4>Просмотр архивов погодных условий в городе Москве</h4>
              <asp:DropDownList ID="Month" runat="server" name="Месяц">
                 <asp:ListItem value=""></asp:ListItem>
                 <asp:ListItem value="0">Январь</asp:ListItem>
@@ -55,7 +60,7 @@
             </asp:Button>  
            
 
-            <asp:GridView ID="grid" runat="server" DataSourceID="getWeathers" AutoGenerateColumns="false" DataKeyNames="Date" AllowPaging="true" PageSize="10">
+            <asp:GridView ID="grid" runat="server" DataSourceID="getWeathers" AutoGenerateColumns="false" DataKeyNames="Date" AllowPaging="true" PageSize="8" PagerStyle-ForeColor="Black">
             <Columns>
                 <asp:BoundField HeaderText="Дата" DataField="Date" />
                 <asp:BoundField HeaderText="Температура, гр. Ц" DataField="T"  />
@@ -69,6 +74,7 @@
                 <asp:BoundField HeaderText="Горизонтальная видимость, км" DataField="VV" />
                 <asp:BoundField HeaderText="Погодные явления" DataField="Other" />
             </Columns>
+                <PagerSettings Mode="NumericFirstLast" />
             </asp:GridView>
         
             <asp:SqlDataSource ID="getWeathers" runat="server"

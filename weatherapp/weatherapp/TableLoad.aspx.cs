@@ -22,7 +22,7 @@ namespace weatherapp
         {
             using (WeatherContext db = new WeatherContext())
             {
-                db.Database.Delete();
+                db.Database.ExecuteSqlCommand("DELETE FROM Weathers");
                 MessageBox.Show("Все данные были успешно удалены.");
             }
         }
@@ -30,7 +30,6 @@ namespace weatherapp
         {
             if ((FileUpload1.PostedFile != null) && (FileUpload1.PostedFile.ContentLength > 0))
             {
-                var count = 0;
                 foreach (HttpPostedFile uploadedFile in FileUpload1.PostedFiles)
                 {
                     try
@@ -91,15 +90,12 @@ namespace weatherapp
                             }
                             db.SaveChanges();
                         }
-                        myLabel.Text += "Таблицы из файла № " + count + " успешно загружены. ";
+                        myLabel.Text += "\t Таблицы из файла " + uploadedFile.FileName + " успешно загружены.   \n";
                     }
                     catch
                     {
                         MessageBox.Show("Таблица неверного формата");
                     }
-                    count++;
-
-
                 }
             }
         }

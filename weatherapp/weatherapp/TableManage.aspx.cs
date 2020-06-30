@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace weatherapp
 {
@@ -14,7 +16,7 @@ namespace weatherapp
         { 
             if (Month.SelectedValue != "" && Year.SelectedValue == "")
             {
-                MessageBox.Show("Выберите год.");
+                MessageBox.Show(new Form { TopMost = true }, "Введите год", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {

@@ -1,0 +1,43 @@
+﻿body {
+    font-size: 13px;
+    padding-top:20px;
+    padding-left: 40px;
+    padding-right: 20px;
+    background-image: url('images/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+nav {
+    display: block;
+}
+
+.menu {
+}
+
+    .menu ul {
+        list-style:none;
+    }
+
+    .menu li {
+        display: inline;
+    }
+
+
+
+table {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.header {
+    font-weight: bold;
+}
+
+td {
+    padding-right: 10px;
+}
+
+input {
+    width: 230px;
+}
