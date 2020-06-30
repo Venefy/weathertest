@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="weatherapp.Master" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link  type="text/css" rel="stylesheet" href="bootstrap.css" />
+    <link  type="text/css" rel="stylesheet" href="Style1.css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+             <asp:Menu ID="Menu1" runat="server"  StaticDisplayLevels="2" Font-Size="Larger" >
+            <staticmenuitemstyle
+          forecolor="Black"/>
+        <statichoverstyle Font-Bold="true"/>
+          <items>
+          <asp:menuitem navigateurl="Default.aspx" 
+            text="Главная"
+            tooltip="Главная страница">
+              <asp:menuitem navigateurl="TableManage.aspx"
+              text="Просмотр архивов "
+              tooltip="Просмотр архивов погодных условий в городе Москве"/>
+            <asp:menuitem navigateurl="TableLoad.aspx"
+              text="Загрузка архивов "
+              tooltip="Загрузка архивов погодных условий в городе Москве"/>
+            </asp:menuitem>
+        </items>
+        </asp:Menu>
+            <br></br>
+            <asp:ContentPlaceHolder ID="Con1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

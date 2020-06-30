@@ -1,36 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TableManage.aspx.cs" Inherits="weatherapp.TableManage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Master.master" AutoEventWireup="true" CodeBehind="TableManage.aspx.cs" Inherits="weatherapp.TableManage" %>
 
-<!DOCTYPE html>
+<asp:Content ID="headcont" ContentPlaceHolderID="head" runat="server">
+    <title>Просмотр</title>
+</asp:Content>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title>Просмотр архивов</title>
-     <link  type="text/css" rel="stylesheet" href="bootstrap.css" />
-    <link  type="text/css" rel="stylesheet" href="Style1.css" />
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-          <asp:Menu ID="Menu1" runat="server"  StaticDisplayLevels="2" Font-Size="Larger">
-                <staticmenuitemstyle
-          forecolor="Black"/>
-        <statichoverstyle Font-Bold="true"/>
-          <items>
-          <asp:menuitem navigateurl="Default.aspx" 
-            text="Главная"
-            tooltip="Главная страница">
-              <asp:menuitem navigateurl="TableManage.aspx"
-              text="Просмотр архивов"
-              tooltip="Просмотр архивов погодных условий в городе Москве"/>
-            <asp:menuitem navigateurl="TableLoad.aspx"
-              text="Загрузка архивов"
-              tooltip="Загрузка архивов погодных условий в городе Москве"/>
-            </asp:menuitem>
-        </items>
-        </asp:Menu>
-            <br /><br /> 
-            <h4>Просмотр архивов погодных условий в городе Москве</h4>
-             <asp:DropDownList ID="Month" runat="server" name="Месяц">
+<asp:Content ID="Content1" ContentPlaceHolderID="Con1" runat="server">
+    <h5>Просмотр архивов погодных условий в городе Москве</h5>
+                <asp:DropDownList ID="Month" runat="server" name="Месяц">
                 <asp:ListItem value=""></asp:ListItem>
                 <asp:ListItem value="0">Январь</asp:ListItem>
                 <asp:ListItem value="1">Февраль</asp:ListItem>
@@ -80,7 +56,5 @@
             <asp:SqlDataSource ID="getWeathers" runat="server"
 	        ConnectionString="<%$ ConnectionStrings:DBConnection %>"
 	        SelectCommand="SELECT * FROM Weathers ORDER BY Date" />
-                </div>
-    </form>
-</body>
-</html>
+
+</asp:Content>

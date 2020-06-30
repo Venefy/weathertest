@@ -20,10 +20,17 @@ namespace weatherapp
     {
         protected void delete_Click(object sender, EventArgs e)
         {
-            using (WeatherContext db = new WeatherContext())
+            try
             {
-                db.Database.ExecuteSqlCommand("DELETE FROM Weathers");
-                MessageBox.Show("Все данные были успешно удалены.");
+                using (WeatherContext db = new WeatherContext())
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM Weathers");
+                    MessageBox.Show("Все данные были успешно удалены.");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Произошла ошибка");
             }
         }
         protected void Upload_Click(object sender, EventArgs e)
