@@ -1,5 +1,15 @@
 # Test App about Weather
 
+a test app doing 2 things
+-adding tables
+-showing tables
+
+made with asp.net
+
+
+
+
+
 ## Структура проекта
 На данный момент 5 главных структур:
 
